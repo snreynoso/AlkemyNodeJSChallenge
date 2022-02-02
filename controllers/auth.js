@@ -1,10 +1,15 @@
 const User = require('../database/DBmodels/user');
-const { generateJWT } = require("../helpers/generate-jwt");
+const { generateJWT } = require('../helpers/generate-jwt');
+const sendEmail = require('../helpers/send-grid');
 
 const register = async (req, res) => {
     const { ...data } = req.body;
     try {
         await User.create(data); // Save in DB
+
+        // Send wellcome email
+        sendEmail(data.email);
+
         res.json({
             msg: `User ${data.name} created!`
         });

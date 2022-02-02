@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-//const fileUpload = require('express-fileupload');
 const sequelize = require('../database/config');
-const SERVER_PORT = process.env.SERVER_PORT || 3000;
+
 require('../database/associations');
+
+const SERVER_PORT = process.env.SERVER_PORT || 3000;
 
 class Server {
     constructor() {
@@ -13,6 +14,7 @@ class Server {
         this.paths = {
             auth:      '/auth',
             character: '/characters',
+            movie:     '/movies',
         }
 
         // DB Connect
@@ -39,19 +41,12 @@ class Server {
         // Reading data Body 
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
-
-        // Public DIR
-        //this.app.use(express.static('public'));
-        // FileUpload
-        ///this.app.use(fileUpload({
-        //    useTempFiles: true,
-        //    tempFileDir: '/tmp'
-        //}));
     }
 
     routes() {
-        this.app.use(this.paths.auth, require('../routes/auth'));
-        this.app.use(this.paths.character, require('../routes/characters'));
+        this.app.use(this.paths.auth,       require('../routes/auth'));
+        this.app.use(this.paths.character,  require('../routes/characters'));
+        this.app.use(this.paths.movie,      require('../routes/movies'));
     }
 
     listen() {

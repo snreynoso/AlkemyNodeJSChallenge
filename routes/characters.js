@@ -1,19 +1,17 @@
 const { Router } = require('express');
+const { validateJWT } = require('../middlewares/validate-jwt');
 const {
     getAllCharacters,
-    createCharacter, 
-    deleteCharacter, 
-    updateCharacter 
+    createCharacter,
+    deleteCharacter,
+    updateCharacter,
 } = require('../controllers/characters')
-const { validateJWT } = require('../middlewares/validate-jwt');
+
 const router = Router();
 
-router.get('/', validateJWT, getAllCharacters);
-router.post('/create',validateJWT, createCharacter);
-router.delete('/delete/:id', deleteCharacter);
-router.put('/update/:id', updateCharacter);
-//router.post('?name=nombre',    getByNameCharacter);
-//router.post('?age=edad',       getByAgeCharacter);
-//router.post('?movies=idMovie', getByMoviesCharacter);
+router.get('/',             validateJWT, getAllCharacters);
+router.post('/create',      validateJWT, createCharacter);
+router.delete('/delete/:id',validateJWT, deleteCharacter);
+router.put('/update/:id',   validateJWT, updateCharacter);
 
 module.exports = router;

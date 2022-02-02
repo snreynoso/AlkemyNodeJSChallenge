@@ -11,7 +11,11 @@ const Movie = sequelize.define('movie',
     },
     avatar: DataTypes.STRING,
     date: DataTypes.DATE,
-    rating: DataTypes.INTEGER,
+    rating: {
+      type: DataTypes.INTEGER,
+      min: 1,
+      max: 5
+    }
   }
 );
 
